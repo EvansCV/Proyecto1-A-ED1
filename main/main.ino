@@ -1,7 +1,7 @@
 #include "LED.h"
 #include "Sensor.h"
 #include "Pantalla.h"
-# include "Boton.h"
+#include "Boton.h"
 
 // Creación de instancias.
 Pantalla lcd(8, 7, 10, 11, 12, 13);
