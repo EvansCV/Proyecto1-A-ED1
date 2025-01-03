@@ -15,7 +15,7 @@ LED ledRGB6(31, 32, 33);
 
 // Constantes 
 
-valorModo = 0; // Esta define el modo, será cambiada según el botón que sea presionado.
+int valorModo = 0; // Esta define el modo, será cambiada según el botón que sea presionado.
 
 
 void setup() {
@@ -40,50 +40,52 @@ void modo(int modo) {
   } else if (modo == 2) {
     modoLectura();
   } else if (modo == 3) {
-    modoFiesta()
+    modoFiesta();
   } else if (modo == 4) {
-    modoRelajacion()
+    modoRelajacion();
   }
 
 }
 
 
 // LEDs de color morado para el modo noche, junto con un largo período de parpadeo.
-void modoNoche();
+void modoNoche() {
   ledRGB1.parpadear(255, 0, 255, 5000);
   ledRGB2.parpadear(255, 0, 255, 5000);
   ledRGB3.parpadear(255, 0, 255, 5000);
   ledRGB4.parpadear(255, 0, 255, 5000);
   ledRGB5.parpadear(255, 0, 255, 5000);
   ledRGB6.parpadear(255, 0, 255, 5000);
+}
 
 
 // LEDs de color amarillo y blanco para el modo lectura.
-void modoLectura();
+void modoLectura() {
   ledRGB1.escribir(255, 255, 255);
   ledRGB2.escribir(255, 255, 0);
   ledRGB3.escribir(255, 255, 0);
   ledRGB4.escribir(255, 255, 0);
   ledRGB5.escribir(255, 255, 255);
   ledRGB6.escribir(255, 255, 0);
+}
 
 
 // Colores rojos, azul y morado para el modoFiesta.
-void modoFiesta();
+void modoFiesta() {
   ledRGB1.parpadear(0, 0, 255, 1000);
   ledRGB2.parpadear(255, 0, 0, 1000);
   ledRGB3.parpadear(255, 0, 255, 1000);
   ledRGB4.parpadear(0, 0, 255, 1000);
   ledRGB5.parpadear(255, 0, 0, 1000);
   ledRGB6.parpadear(255, 0, 255, 1000);
-
+}
 
 // Colores cian y blanco para el modo relajación.
-void modoRelajacion();
+void modoRelajacion() {
   ledRGB1.escribir(255, 255, 255);
   ledRGB2.escribir(0, 255, 255);
   ledRGB3.escribir(0, 255, 255);
   ledRGB4.escribir(255, 255, 255);
   ledRGB5.escribir(255, 255, 255);
-  ledRGB6.escribir(0, 255, 255)
-
+  ledRGB6.escribir(0, 255, 255);
+}
