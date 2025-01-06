@@ -74,7 +74,7 @@ int cantidadLEDOn() {
 // Esta función ajusta el brillo de los LEDs según la cantidad de luz detectada por la fotoresistencia.
 void ajustarBrilloSegunLuz() {
     int valorFotoresistencia = fotoresistencia.leer();
-    int brillo = map(valorFotoresistencia, 0, 1023, 255, 0);
+    int brillo = map(valorFotoresistencia, 1023, 0, 255, 0);
     for (int i = 0; i < numLeds; i++) {
         ledsRGB[i]->escribir(brillo, brillo, brillo);
     }
@@ -100,8 +100,9 @@ void cambiarModo() {
     else {
       valorModo = 0;
     }
-  }
+  } 
 }
+
 
 
 // Función que define los modos de iluminación.

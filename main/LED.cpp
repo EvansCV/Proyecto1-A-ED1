@@ -37,7 +37,7 @@ void LED::escribir(int valorR, int valorG, int valorB) {
 
 
 bool LED::encendido() {
-  return (stateR > 0 || stateG > 0 || stateB > 0);
+  return (stateR == 0 || stateG == 0 || stateB == 0);
 }
 
 
