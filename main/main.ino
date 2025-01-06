@@ -26,7 +26,7 @@ Boton botonPatioInt(41);
 // Constantes 
 
 bool modoIlAuto = false; // Variable que define si la iluminación será automática o no.
-int valorModo = 0; // Esta define el modo, será cambiada según el botón que sea presionado.
+int valorModo = 0; // Esta define el modo, será cambiada cuando el botón correspondiente se presione.
 String stringModo = "Apagado";
 LED* ledsRGB[] = {&ledRGB1, &ledRGB2, &ledRGB3, &ledRGB4, &ledRGB5, &ledRGB6};
 Boton* botonesHabitaciones[] = {&botonPatioT, &botonPatioF, &botonCuarto, &botonSala, &botonCocina, &botonPatioInt};
@@ -74,27 +74,26 @@ int cantidadLEDOn() {
 // Esta función ajusta el brillo de los LEDs según la cantidad de luz detectada por la fotoresistencia.
 void ajustarBrilloSegunLuz() {
     int valorFotoresistencia = fotoresistencia.leer();
-    int brillo = map(valorFotoresistencia, 0, 1023, 0, 255);
+    int brillo = map(valorFotoresistencia, 0, 1023, 255, 0);
     for (int i = 0; i < numLeds; i++) {
         ledsRGB[i]->escribir(brillo, brillo, brillo);
     }
 }
 
 
-
 // Función de debounce, para evitar los rebotes al presionar un botón.
 bool debounce(Boton* boton, int index) {
-    unsigned long currentTime = millis();
-    if (currentTime - lastDebounceTimes[index] > 50) {
-        lastDebounceTimes[index] = currentTime;
-        return boton->leer() == LOW;
-    }
-    return false;
-}
+     unsigned long currentTime = millis();
+     if (currentTime - lastDebounceTimes[index] > 50) {
+         lastDebounceTimes[index] = currentTime;
+         return boton->leer() == LOW;
+     }
+     return false;
+ }
 
 
 void cambiarModo() {
-  if (debounce(&botonCambiarModo, 0)) {
+  if (botonCambiarModo.leer() == LOW) {
     if (valorModo != 4) {
       valorModo ++;
     }
@@ -111,7 +110,9 @@ void modo() {
   if (valorModo == 1) {
     stringModo = "Noche";
     // LEDs de color morado para el modo noche, junto con un largo período de parpadeo.
-    setBlinkFAL(0, 255, 0, 5000);
+    ledRGB1.escribir(0, 255, 0);
+    ledRGB2.escribir(0, 255, 0);
+    ledRGB6.escribir(0, 255, 0);
 
   } else if (valorModo == 2) {
     stringModo = "Lectura";
