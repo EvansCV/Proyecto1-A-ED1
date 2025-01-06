@@ -10,6 +10,10 @@ private:
   int pinR; // Pin para el canal rojo
   int pinG; // Pin para el canal verde
   int pinB; // Pin para el canal azul
+  // Estado para cada uno de las canales
+  int stateR;
+  int stateG;
+  int stateB;
 
 public:
     LED(int pinR, int pinG, int pinB);
@@ -22,6 +26,8 @@ public:
     void apagar(); // Apagar el LED
     // Se necesitan los valores de los colores en los parámetros debido a que en este caso ya que se desconocen los valores de los colores
     void parpadear(int red, int green, int blue, int intervalo); 
+    // Esta función sirve para determinar si el LED está encendido o no.
+    bool encendido();
 
 };
 #endif

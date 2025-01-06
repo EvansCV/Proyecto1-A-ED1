@@ -3,7 +3,7 @@
 Pantalla::Pantalla(int rs, int en, int d4, int d5, int d6, int d7)
     : Componente(-1), lcd(rs, en, d4, d5, d6, d7), 
       previousMillis(0), interval(2000), pantallaActual(0), nivelLuz("Alta"),
-      modo("Fiesta"), numLeds(5), luz("Nivel de luz"), estadoModo("Modo Actual"),
+      luz("Nivel de luz"), estadoModo("Modo Actual"),
       cantidadLeds("Num de Leds") {}
 
 void Pantalla::iniciar() {
@@ -21,7 +21,7 @@ void Pantalla::escribir(int valor) {
     lcd.print(valor);
 }
 
-void Pantalla::imprimirPantalla(Sensor fotoresistencia) {
+void Pantalla::imprimirPantalla(Sensor fotoresistencia, String modo, int numLeds) {
 
   // Leer luz de forma análoga
   int light = fotoresistencia.leer();

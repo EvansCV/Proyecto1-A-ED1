@@ -29,7 +29,7 @@ public:
     void iniciar() override;
     int leer() override;
     void escribir(int valor) override;
-    void imprimirPantalla(Sensor fotoresistencia);
+    void imprimirPantalla(Sensor fotoresistencia, String modo, int numLeds);
 };
 #endif
 
