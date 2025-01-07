@@ -120,10 +120,15 @@ void modo() {
     // Colores rojos para el modo Fiesta.
     ledRGB1.escribir(255, 255, 255);
     ledRGB2.escribir(255, 255, 255);
-    ledRGB3.parpadear(0, 255, 255, 1000);
-    ledRGB4.parpadear(0, 255, 255, 1000);
-    ledRGB5.parpadear(0, 255, 255, 1000);
     ledRGB6.escribir(255, 255, 255);
+    ledRGB3.escribir(0, 255, 255);
+    ledRGB4.escribir(0, 255, 255);
+    ledRGB5.escribir(0, 255, 255);
+    delay(1000);
+    ledRGB3.escribir(255, 255, 255);
+    ledRGB4.escribir(255, 255, 255);
+    ledRGB5.escribir(255, 255, 255);
+    delay(1000);
 
 
   } else if (valorModo == 4) {
