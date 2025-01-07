@@ -128,10 +128,12 @@ void modo() {
     ledRGB3.escribir(255, 255, 255);
     ledRGB4.escribir(255, 255, 255);
     ledRGB5.escribir(255, 255, 255);
-    delay(1000);
+    delay(3000);
 
 
   } else if (valorModo == 4) {
+    setColorFAL(255, 255, 255);
+    delay(800);
     stringModo = "Relajación";
     // Colores cian para el modo relajación.
     setColorFAL(255, 0, 0);
