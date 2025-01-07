@@ -64,13 +64,19 @@ int cantidadLEDOn() {
 
 
 // Esta función ajusta el brillo de los LEDs según la cantidad de luz detectada por la fotoresistencia.
-void ajustarBrilloSegunLuz() {
+int ajustarBrilloSegunLuz() {
     int valorFotoresistencia = fotoresistencia.leer();
     int brillo = map(valorFotoresistencia, 1023, 0, 255, 0);
     for (int i = 0; i < numLeds; i++) {
         ledsRGB[i]->escribir(brillo, brillo, brillo);
     }
+    if (fotoresistencia.leer() < 400) {
+      return 6;
+      } else {
+        return 0;
+      } 
 }
+
 
 
 // Función de debounce, para evitar los rebotes al presionar un botón.
@@ -128,15 +134,14 @@ void modo() {
     ledRGB3.escribir(255, 255, 255);
     ledRGB4.escribir(255, 255, 255);
     ledRGB5.escribir(255, 255, 255);
-    delay(3000);
+    delay(1000);
 
 
   } else if (valorModo == 4) {
-    setColorFAL(255, 255, 255);
-    delay(800);
     stringModo = "Relajación";
     // Colores cian para el modo relajación.
     setColorFAL(255, 0, 0);
+    //delay(800);
 
   } else if (valorModo == 0) {
     stringModo = "Apagado";
@@ -236,8 +241,8 @@ void loop() {
     lucesManual();
   }
   else { // En este caso las LEDs son iluminadas de forma automática gracias a la fotoresistencia.
-    ajustarBrilloSegunLuz();
-    lcd.imprimirPantalla(fotoresistencia, "Auto", cantidadLEDOn());
+    int canLED = ajustarBrilloSegunLuz();
+    lcd.imprimirPantalla(fotoresistencia, "Auto", canLED);
   }
   delay(200);
 }

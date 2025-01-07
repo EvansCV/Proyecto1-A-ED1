@@ -2,7 +2,7 @@
 
 Pantalla::Pantalla(int rs, int en, int d4, int d5, int d6, int d7)
     : Componente(-1), lcd(rs, en, d4, d5, d6, d7), 
-      previousMillis(0), interval(2000), pantallaActual(0), nivelLuz("Alta"),
+      previousMillis(0), interval(2000), pantallaActual(0), nivelLuz("Baja"),
       luz("Nivel de luz"), estadoModo("Modo Actual"),
       cantidadLeds("Num de Leds") {}
 
@@ -27,7 +27,7 @@ void Pantalla::imprimirPantalla(Sensor fotoresistencia, String modo, int numLeds
   int light = fotoresistencia.leer();
 
   // Determinar el nivel de luz.
-  if (light < 200) {
+  if (light < 400) {
     nivelLuz = "Baja";
   } else {
     nivelLuz = "Alta";
