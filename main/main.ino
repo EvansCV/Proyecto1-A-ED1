@@ -86,6 +86,7 @@ bool debounce(Boton* boton, int index) {
 
 void cambiarModo() {
   if (botonCambiarModo.leer() == LOW) {
+    delay(700);
     if (valorModo != 4) {
       valorModo ++;
     }
