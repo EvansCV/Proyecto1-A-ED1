@@ -43,14 +43,6 @@ void setColorFAL(int red, int green, int blue){
 }
 
 
-// Función para setear un parpadeo a todas las LED, se utlizará más adelante.
-void setBlinkFAL(int red, int green, int blue, int range) {
-  for (int i = 0; i < 6; i++) {
-    ledsRGB[i]->parpadear(red, green, blue, range);
-  }
-}
-
-
 // Alternar entre el modo automático y manual
 void cambiarModoIlAuto() {
     if (debounce(&botonModoIlAuto, 0)) {
@@ -93,7 +85,7 @@ bool debounce(Boton* boton, int index) {
 
 
 void cambiarModo() {
-  if (botonCambiarModo.leer() == LOW) {
+  if (debounce(&botonCambiarModo, 0)) {
     if (valorModo != 4) {
       valorModo ++;
     }
@@ -113,6 +105,9 @@ void modo() {
     // LEDs de color morado para el modo noche, junto con un largo período de parpadeo.
     ledRGB1.escribir(0, 255, 0);
     ledRGB2.escribir(0, 255, 0);
+    ledRGB3.escribir(255, 255, 255);
+    ledRGB4.escribir(255, 255, 255);
+    ledRGB5.escribir(255, 255, 255);
     ledRGB6.escribir(0, 255, 0);
 
   } else if (valorModo == 2) {
@@ -123,7 +118,13 @@ void modo() {
   } else if (valorModo == 3) {
     stringModo = "Fiesta";
     // Colores rojos para el modo Fiesta.
-    setBlinkFAL(0, 255, 255, 1000);
+    ledRGB1.escribir(255, 255, 255);
+    ledRGB2.escribir(255, 255, 255);
+    ledRGB3.parpadear(0, 255, 255, 1000);
+    ledRGB4.parpadear(0, 255, 255, 1000);
+    ledRGB5.parpadear(0, 255, 255, 1000);
+    ledRGB6.escribir(255, 255, 255);
+
 
   } else if (valorModo == 4) {
     stringModo = "Relajación";
@@ -176,7 +177,7 @@ void lucesManual() {
     for (int i = 0; i < numLeds; i++) {
         switch (valorModo) {
             case 0: manejarLuz(i, 255, 255, 255, false, 0); break; // Apagado
-            case 1: manejarLuz(i, 0, 255, 0, true, 5000); break; // Noche
+            case 1: manejarLuz(i, 0, 255, 0, false, 0); break; // Noche
             case 2: manejarLuz(i, 0, 255, 0, false, 0); break; // Lectura
             case 3: manejarLuz(i, 0, 255, 255, true, 1000); break; // Fiesta
             case 4: manejarLuz(i, 255, 0, 0, false, 0); break; // Relajación
@@ -196,7 +197,7 @@ void loop() {
   else { // En este caso las LEDs son iluminadas de forma automática gracias a la fotoresistencia.
     ajustarBrilloSegunLuz();
   }
-  delay(400);
+  delay(200);
 }
 
 

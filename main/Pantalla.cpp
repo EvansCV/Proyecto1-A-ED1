@@ -72,7 +72,6 @@ void Pantalla::imprimirPantalla(Sensor fotoresistencia, String modo, int numLeds
     
     pantallaActual = (pantallaActual + 1) % 3;
   }
-  delay(100); // Pequeño delay para suavizar la lectura del sensor
 
 }
 
