@@ -85,7 +85,7 @@ bool debounce(Boton* boton, int index) {
 
 
 void cambiarModo() {
-  if (debounce(&botonCambiarModo, 0)) {
+  if (botonCambiarModo.leer() == LOW) {
     if (valorModo != 4) {
       valorModo ++;
     }
@@ -94,7 +94,6 @@ void cambiarModo() {
     }
   } 
 }
-
 
 
 // Función que define los modos de iluminación.
@@ -157,38 +156,72 @@ for (int i = 0; i < numBotones; i++) {
 }    
 
 
-// Funciones que permiten apagar y encender luces de forma manual.
-void manejarLuz(int index, int red, int green, int blue, bool parpadeo, int rango) {
-    if (botonesHabitaciones[index]->leer() == LOW) {
-        if (ledsRGB[index]->encendido()) {
-            ledsRGB[index]->apagar();
-        } else {
-            if (parpadeo) {
-                ledsRGB[index]->parpadear(red, green, blue, rango);
-            } else {
-                ledsRGB[index]->escribir(red, green, blue);
-            }
-        }
-    }
-}
-
-
+// Función para apagar y encender luces de forma manual.
 void lucesManual() {
-    for (int i = 0; i < numLeds; i++) {
-        switch (valorModo) {
-            case 0: manejarLuz(i, 255, 255, 255, false, 0); break; // Apagado
-            case 1: manejarLuz(i, 0, 255, 0, false, 0); break; // Noche
-            case 2: manejarLuz(i, 0, 255, 0, false, 0); break; // Lectura
-            case 3: manejarLuz(i, 0, 255, 255, true, 1000); break; // Fiesta
-            case 4: manejarLuz(i, 255, 0, 0, false, 0); break; // Relajación
+  // Para cada modo
+  // Modo apagado
+  if (valorModo == 0) {
+    // Cada LED, en este caso si se enciende cada led debería quedar blanca, al encenderse.
+    for (int i = 0; i < 6; i++) {
+      if (botonesHabitaciones[i]->leer() == LOW) {
+        if (ledsRGB[i]->encendido()) {
+          ledsRGB[i]->apagar();
+        } else {
+          ledsRGB[i]->escribir(0, 0, 0);
         }
+      }
     }
+  } else if (valorModo == 1){ // Morado para el modo noche
+    for (int i = 0; i < 6; i++) {
+      if (botonesHabitaciones[i]->leer() == LOW) {
+        if (ledsRGB[i]->encendido()) {
+          ledsRGB[i]->apagar();
+        } else {
+          ledsRGB[i]->escribir(0, 255, 0);
+        }
+      }
+    }
+  } else if (valorModo == 2){ // Amarillo para el modo lectura.
+    for (int i = 0; i < 6; i++) {
+      if (botonesHabitaciones[i]->leer() == LOW) {
+        if (ledsRGB[i]->encendido()) {
+          ledsRGB[i]->apagar();
+        } else {
+          ledsRGB[i]->escribir(0, 255, 0);
+        }
+      }
+    }
+  } else if (valorModo == 3) { // Rojo para el modo fiesta.
+    for (int i = 0; i < 6; i++) {
+      if (botonesHabitaciones[i]->leer() == LOW) {
+        if (ledsRGB[i]->encendido()) {
+          ledsRGB[i]->apagar();
+        } else {
+          ledsRGB[i]->parpadear(0, 255, 255, 1000);
+        }
+      }
+    }
+  } else if (valorModo == 4) { // Cian para el modo relajación.
+    for (int i = 0; i < 6; i++) {
+      if (botonesHabitaciones[i]->leer() == LOW) {
+        if (ledsRGB[i]->encendido()) {
+          ledsRGB[i]->apagar();
+        } else {
+          ledsRGB[i]->escribir(255, 0, 0);
+        }
+      }
+    }
+  }
 }
 
 
 void loop() {
   cambiarModoIlAuto();
-  lcd.imprimirPantalla(fotoresistencia, stringModo, cantidadLEDOn()); // Desplegar info en la pantalla del LCD.
+  if (valorModo == 3) {
+    lcd.imprimirPantalla(fotoresistencia, stringModo, 3); // Desplegar info en la pantalla del LCD.
+  } else if (!modoIlAuto) {
+    lcd.imprimirPantalla(fotoresistencia, stringModo, cantidadLEDOn()); // Desplegar info en la pantalla del LCD.
+  }
   if (!modoIlAuto) {
     // Se activarán los modos de iluminación tomando en cuenta que se tiene activo el modo manual.
     modo(); 
@@ -196,6 +229,7 @@ void loop() {
   }
   else { // En este caso las LEDs son iluminadas de forma automática gracias a la fotoresistencia.
     ajustarBrilloSegunLuz();
+    lcd.imprimirPantalla(fotoresistencia, "Auto", cantidadLEDOn());
   }
   delay(200);
 }
